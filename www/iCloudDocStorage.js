@@ -7,6 +7,6 @@ iCloudDocStorage.initUbiquitousContainer = function(containerId, success, error)
   exec(success, error, "iCloudDocStorage", "initUbiquitousContainer", [containerId]);
 };
 
-iCloudDocStorage.syncToCloud = function(fileUrl, success, error) {
-  exec(success, error, "iCloudDocStorage", "syncToCloud", [fileUrl]);
+iCloudDocStorage.syncToCloud = function(fileUrl, folder, success, error) {
+  exec(success, error, "iCloudDocStorage", "syncToCloud", [fileUrl, folder]);
 };

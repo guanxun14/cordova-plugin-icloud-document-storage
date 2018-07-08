@@ -48,6 +48,7 @@
     func syncToCloud(command: CDVInvokedUrlCommand) {
         // Get the file to sync's url
         let fileURLArg = command.arguments[0] as? String
+        let folder = command.arguments[1] as? String
         
         if (fileURLArg != nil) {
             NSLog(fileURLArg!)
@@ -64,7 +65,19 @@
                 // Get the destination URL of the file within the iCloud ubiquitous container
                 let fileUrlInUbiquitousContainer = self.ubiquitousContainerURL?
                     .appendingPathComponent("Documents")
+                    .appendingPathComponent(folder!)
                     .appendingPathComponent((fileURL?.lastPathComponent)!)
+                
+                // Create Folder
+                let logsPath = self.ubiquitousContainerURL?
+                    .appendingPathComponent("Documents").appendingPathComponent(folder!)
+               
+                do {
+                    try FileManager.default.createDirectory(atPath: logsPath!.path, withIntermediateDirectories: true, attributes: nil)
+                } catch let error as NSError {
+                    NSLog("Unable to create directory \(error.debugDescription)")
+                }
+                
                 
                 do {
                     // Tell iOS to move the file to the ubiquitous container and sync to iCloud
